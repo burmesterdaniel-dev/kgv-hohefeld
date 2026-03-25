@@ -44,14 +44,14 @@ export default function NavMobile() {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+          className="fixed top-0 left-0 w-[100dvw] h-[100dvh] bg-black/40 backdrop-blur-sm z-40"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-full z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-[100dvh] w-80 max-w-[100dvw] z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ backgroundColor: '#ffffff' }}
       >
         <div className="flex items-center justify-between p-6 border-b border-slate-100">
