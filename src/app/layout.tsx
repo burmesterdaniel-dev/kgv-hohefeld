@@ -22,7 +22,7 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-on-surface font-body selection:bg-secondary/30">
         
-        <nav className="fixed top-0 w-full z-50 glass-nav shadow-sm font-headline tracking-tight">
+        <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/50 font-headline tracking-tight">
           <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
             <Link href="/" className="flex items-center gap-3 group">
               <img alt="KGV-Hohefeld Logo" src="/logo.png" className="h-20 md:h-28 lg:h-32 w-auto transition-transform duration-300 group-hover:scale-105" />
