@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <section className="relative min-h-[870px] flex items-center overflow-hidden mx-4 my-4 rounded-xl">
-        <img src="https://images.unsplash.com/photo-1416879590558-7c858bdc1fac?auto=format&fit=crop&q=80&w=2000" alt="KGV Hohefeld Garten" className="absolute inset-0 w-full h-full object-cover z-0" />
+        <img src="/hero-bg.jpg" alt="KGV Hohefeld Garten" className="absolute inset-0 w-full h-full object-cover z-0" />
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-primary/60 backdrop-blur-[2px]"></div>
         </div>
@@ -71,7 +71,7 @@ export default function Home() {
       <section className="bg-surface-container-low py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="relative h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl">
-            <img src="https://images.unsplash.com/photo-1558904541-efa843a96f09?q=80&w=1000&auto=format&fit=crop" alt="Kleingartenidylle" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" />
+            <img src="/geschichte.jpg" alt="Kleingartenidylle" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" />
             <div className="absolute inset-0 border-8 border-white/20 rounded-3xl"></div>
           </div>
           <div>
