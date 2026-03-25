@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import db from '@/lib/db'
 import { notFound } from 'next/navigation'
+import ImageGallery from '@/components/ImageGallery'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
@@ -50,18 +51,7 @@ export default async function GartenDetail({ params }: { params: Promise<{ id: s
               <div dangerouslySetInnerHTML={{ __html: garden.description }} />
             </div>
 
-            {images.length > 1 && (
-              <div className="mt-16 pt-12 border-t border-slate-100">
-                <h3 className="text-2xl font-bold text-slate-800 mb-8 tracking-tight">Weitere Impressionen</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {images.map((img, i) => (
-                    <div key={img} className="aspect-square rounded-xl overflow-hidden shadow-md bg-slate-100">
-                      <img src={img} alt={`Garten ${i+1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <ImageGallery images={images} title={garden.title} />
           </div>
           
           <div className="lg:col-span-4">
