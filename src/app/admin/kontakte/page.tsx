@@ -32,7 +32,7 @@ export default async function AdminKontakte() {
     // 4. Sende Email via Resend
     try {
       await resend.emails.send({
-        from: 'KGV Hohefeld Support <onboarding@resend.dev>',
+        from: `KGV Hohefeld Support <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
         to: contactInfo.email as string,
         subject: 'Antwort auf Ihre Anfrage (KGV Hohefeld)',
         html: `
