@@ -76,9 +76,9 @@ export default async function AdminKontakte() {
             <details key={c.id} className="bg-white rounded-xl shadow-sm border border-slate-200 group overflow-hidden" open={c.status === 'neu' || c.status === 'wartet_auf_admin'}>
               <summary className="p-6 md:p-8 cursor-pointer list-none flex flex-col md:flex-row justify-between md:items-center gap-4 hover:bg-slate-50 transition-colors">
                 <div>
-                  <div className="flex items-center gap-3">
-                    <h3 className="font-bold text-xl text-slate-800">{c.name}</h3>
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${c.status === 'neu' || c.status === 'wartet_auf_admin' ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-slate-500'}`}>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+                    <h3 className="font-bold text-xl text-slate-800">{c.name} <span className="text-sm font-normal text-slate-500 block sm:inline">— {c.subject || 'Allgemeine Anfrage'}</span></h3>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full w-max ${c.status === 'neu' || c.status === 'wartet_auf_admin' ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-slate-500'}`}>
                       {c.status === 'neu' ? 'Neue Anfrage' : c.status === 'wartet_auf_admin' ? 'Neue Antwort vom Nutzer' : 'Beantwortet'}
                     </span>
                   </div>

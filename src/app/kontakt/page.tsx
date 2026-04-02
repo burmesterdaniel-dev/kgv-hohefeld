@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Kontakt() {
   const [status, setStatus] = useState('')
+  const [subject, setSubject] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('subject')) {
+      setSubject(params.get('subject') as string)
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -13,6 +21,7 @@ export default function Kontakt() {
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
+      subject: formData.get('subject'),
       message: formData.get('message')
     }
 
@@ -52,6 +61,10 @@ export default function Kontakt() {
             <div>
               <label style={{display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#191c1a'}}>E-Mail Adresse</label>
               <input name="email" required type="email" style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #ccc'}} />
+            </div>
+            <div>
+              <label style={{display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#191c1a'}}>Betreff / Worum geht es?</label>
+              <input name="subject" required type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="z. B. Allgemeine Anfrage" style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #ccc'}} />
             </div>
             <div>
               <label style={{display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#191c1a'}}>Ihre Nachricht</label>

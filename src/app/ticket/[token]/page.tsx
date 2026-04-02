@@ -64,7 +64,10 @@ export default async function TicketPage({ params }: { params: { token: string }
           <div className="bg-slate-50 border-b border-slate-100 p-6 md:px-8 md:py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <p className="font-bold text-lg text-slate-800">{contact.name}</p>
-              <p className="text-slate-500 text-sm">Ticket erstellt am {new Date(contact.created_at).toLocaleDateString('de-DE')}</p>
+              {contact.subject && contact.subject !== 'Allgemeine Anfrage' && (
+                <p className="text-sm font-bold text-primary mt-0.5">{contact.subject}</p>
+              )}
+              <p className="text-slate-500 text-sm mt-1">Ticket erstellt am {new Date(contact.created_at).toLocaleDateString('de-DE')}</p>
             </div>
             <span className={`text-xs font-bold px-4 py-1.5 rounded-full ${contact.status === 'beantwortet' ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-amber-100 text-amber-800 border border-amber-200'}`}>
               {contact.status === 'beantwortet' ? 'Vorstand hat geantwortet' : 'Wartet auf Bearbeitung'}

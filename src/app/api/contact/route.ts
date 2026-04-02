@@ -4,11 +4,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json()
+    const { name, email, subject, message } = await req.json()
+    const safeSubject = subject || 'Allgemeine Anfrage'
     const token = uuidv4()
     
     // Save to DB
-    await db.execute({ sql: 'INSERT INTO contacts (name, email, message, token) VALUES (?, ?, ?, ?)', args: [name as string, email as string, message as string, token] })
+    await db.execute({ sql: 'INSERT INTO contacts (name, email, subject, message, token) VALUES (?, ?, ?, ?, ?)', args: [name as string, email as string, safeSubject, message as string, token] })
 
     const contactInfo = await db.execute({ sql: 'SELECT id FROM contacts WHERE token = ?', args: [token] })
     const contactId = contactInfo.rows[0].id

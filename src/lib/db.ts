@@ -60,6 +60,7 @@ async function initDb() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       email TEXT NOT NULL,
+      subject TEXT DEFAULT 'Allgemeine Anfrage',
       message TEXT NOT NULL,
       status TEXT DEFAULT 'neu',
       token TEXT,
@@ -101,6 +102,9 @@ async function initDb() {
   try {
     try {
       await dbClient.execute('ALTER TABLE contacts ADD COLUMN token TEXT')
+    } catch(e) {}
+    try {
+      await dbClient.execute('ALTER TABLE contacts ADD COLUMN subject TEXT DEFAULT \'Allgemeine Anfrage\'')
     } catch(e) {}
     
     const userCountResult = await dbClient.execute('SELECT count(*) as count FROM users')
