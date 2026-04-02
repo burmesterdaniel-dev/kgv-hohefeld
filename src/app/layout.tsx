@@ -3,6 +3,7 @@ import './globals.css'
 import Link from 'next/link'
 import NavLinks from '@/components/NavLinks'
 import NavMobile from '@/components/NavMobile'
+import CookieBanner from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: 'KGV Hohefeld - Schrebergartenverein in Bremen',
@@ -78,7 +79,8 @@ export default function RootLayout({
               <div>
                 <h4 className="font-headline font-bold text-lg mb-6">Rechtliches</h4>
                 <ul className="space-y-4 text-slate-300 text-sm antialiased">
-                  <li><Link href="/impressum" className="hover:text-secondary transition-colors">Impressum & Datenschutz</Link></li>
+                  <li><Link href="/impressum" className="hover:text-secondary transition-colors">Impressum</Link></li>
+                  <li><Link href="/datenschutz" className="hover:text-secondary transition-colors">Datenschutz</Link></li>
                   <li><Link href="/admin/login" className="hover:text-secondary transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[14px]">admin_panel_settings</span> Vereins-Login (Intern)</Link></li>
                 </ul>
               </div>
@@ -96,6 +98,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <CookieBanner />
       </body>
     </html>
   )
