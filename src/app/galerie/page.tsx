@@ -26,20 +26,49 @@ export default function Galerie() {
     if (!file) return
     setStatus('Lade hoch...')
     
-    const formData = new FormData()
-    formData.append('file', file)
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (event) => {
+      const img = new window.Image()
+      img.src = event.target?.result as string
+      img.onload = async () => {
+        const canvas = document.createElement('canvas')
+        const MAX_WIDTH = 1200
+        const MAX_HEIGHT = 1200
+        let width = img.width
+        let height = img.height
 
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    })
+        if (width > height) {
+          if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH }
+        } else {
+          if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT }
+        }
 
-    if (res.ok) {
-      setStatus('Danke! Ihr Foto ruht nun zur kurzen Prüfung beim Vorstand.')
-      setFile(null)
-      ;(e.target as HTMLFormElement).reset()
-    } else {
-      setStatus('Fehler beim Upload. Bitte versuchen Sie es erneut.')
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, width, height)
+        
+        const base64Data = canvas.toDataURL('image/webp', 0.8)
+        
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: file.name, base64Data })
+          })
+
+          if (res.ok) {
+            setStatus('Danke! Ihr Foto ruht nun zur kurzen Prüfung beim Vorstand.')
+            setFile(null)
+            ;(e.target as HTMLFormElement).reset()
+          } else {
+            setStatus('Fehler beim Upload. Bitte versuchen Sie es erneut.')
+          }
+        } catch(err) {
+          setStatus('Fehler beim Upload. Bitte versuchen Sie es erneut.')
+        }
+      }
     }
   }
 
