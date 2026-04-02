@@ -62,6 +62,15 @@ async function initDb() {
       email TEXT NOT NULL,
       message TEXT NOT NULL,
       status TEXT DEFAULT 'neu',
+      token TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS ticket_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      contact_id INTEGER NOT NULL,
+      sender TEXT NOT NULL,
+      message TEXT NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -90,6 +99,10 @@ async function initDb() {
   `)
 
   try {
+    try {
+      await dbClient.execute('ALTER TABLE contacts ADD COLUMN token TEXT')
+    } catch(e) {}
+    
     const userCountResult = await dbClient.execute('SELECT count(*) as count FROM users')
     const count = userCountResult.rows[0].count as number
     if (count === 0) {

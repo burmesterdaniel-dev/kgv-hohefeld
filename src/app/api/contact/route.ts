@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server'
 import db from '@/lib/db'
+import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(req: Request) {
   try {
     const { name, email, message } = await req.json()
+    const token = uuidv4()
     
     // Save to DB
-    await db.execute({ sql: 'INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)', args: [name as string, email as string, message as string] })
+    await db.execute({ sql: 'INSERT INTO contacts (name, email, message, token) VALUES (?, ?, ?, ?)', args: [name as string, email as string, message as string, token] })
+
+    const contactInfo = await db.execute({ sql: 'SELECT id FROM contacts WHERE token = ?', args: [token] })
+    const contactId = contactInfo.rows[0].id
+
+    await db.execute({ sql: 'INSERT INTO ticket_messages (contact_id, sender, message) VALUES (?, ?, ?)', args: [contactId as number, 'user', message as string] })
 
     // Simulate Email to Admin
     console.log('\n--- NEUE E-MAIL (SIMULATION) ---')
