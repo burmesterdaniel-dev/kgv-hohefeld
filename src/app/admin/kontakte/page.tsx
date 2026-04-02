@@ -1,18 +1,18 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 
-export default function AdminKontakte() {
-  const contacts = db.prepare('SELECT * FROM contacts ORDER BY created_at DESC').all() as any[]
+export default async function AdminKontakte() {
+  const contacts = (await db.execute('SELECT * FROM contacts ORDER BY created_at DESC')).rows as any[]
 
   async function markAnswered(formData: FormData) {
     'use server'
-    db.prepare("UPDATE contacts SET status = 'beantwortet' WHERE id = ?").run(formData.get('id'))
+    await db.execute({ sql: "UPDATE contacts SET status = 'beantwortet' WHERE id = ?", args: [formData.get('id') as string] })
     revalidatePath('/admin/kontakte')
   }
 
   async function deleteContact(formData: FormData) {
     'use server'
-    db.prepare("DELETE FROM contacts WHERE id = ?").run(formData.get('id'))
+    await db.execute({ sql: "DELETE FROM contacts WHERE id = ?", args: [formData.get('id') as string] })
     revalidatePath('/admin/kontakte')
   }
 

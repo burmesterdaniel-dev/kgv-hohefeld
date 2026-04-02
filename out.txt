@@ -1,0 +1,69 @@
+﻿src/app/admin/events/page.tsx(38,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/fotos/page.tsx(9,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/fotos/page.tsx(16,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/gaerten/page.tsx(49,22): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/gaerten/page.tsx(58,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/kontakte/page.tsx(9,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/kontakte/page.tsx(15,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/mitglieder/page.tsx(41,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/admin/page.tsx(9,24): error TS2352: Conversion of type 'Row' to type '{ c: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'c' is missing in type 'Row' but required in type '{ c: number; }'.
+src/app/admin/page.tsx(10,25): error TS2352: Conversion of type 'Row' to type '{ c: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'c' is missing in type 'Row' but required in type '{ c: number; }'.
+src/app/admin/page.tsx(11,28): error TS2352: Conversion of type 'Row' to type '{ c: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'c' is missing in type 'Row' but required in type '{ c: number; }'.
+src/app/admin/page.tsx(12,23): error TS2352: Conversion of type 'Row' to type '{ c: number; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'c' is missing in type 'Row' but required in type '{ c: number; }'.
+src/app/admin/users/page.tsx(19,14): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(stmt: InStatement): Promise<ResultSet>', gave the following error.
+    Type 'FormDataEntryValue | null' is not assignable to type 'InValue'.
+      Type 'File' is not assignable to type 'InValue'.
+        Type 'File' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 31 more.
+  Overload 2 of 2, '(sql: string, args?: InArgs | undefined): Promise<ResultSet>', gave the following error.
+    Argument of type '{ sql: string; args: (FormDataEntryValue | null)[]; }' is not assignable to parameter of type 'string'.
+src/app/api/contact/route.ts(9,23): error TS2339: Property 'prepare' does not exist on type 'Client'.
+src/app/api/guestbook/route.ts(21,91): error TS18048: 'info.lastInsertRowid' is possibly 'undefined'.

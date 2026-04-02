@@ -7,6 +7,6 @@ export async function getSession() {
   
   if (!userId) return null
   
-  const user = db.prepare('SELECT id, username FROM users WHERE id = ?').get(userId) as any
+  const user = (await db.execute({ sql: 'SELECT id, username FROM users WHERE id = ?', args: [userId] })).rows[0] as any
   return user || null
 }

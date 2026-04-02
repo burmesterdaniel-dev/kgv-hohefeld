@@ -4,8 +4,8 @@ export const metadata = {
   title: 'Unser Vorstand - KGV Hohefeld'
 }
 
-export default function Vorstand() {
-  const members = db.prepare('SELECT * FROM members ORDER BY id ASC').all() as any[]
+export default async function Vorstand() {
+  const members = (await db.execute('SELECT * FROM members ORDER BY id ASC')).rows as any[]
 
   return (
     <div className="max-w-7xl mx-auto px-8 mb-24" style={{paddingTop: '2rem'}}>

@@ -5,14 +5,14 @@ import ImageGallery from '@/components/ImageGallery'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
-  const g = db.prepare('SELECT title, number FROM gardens WHERE id = ?').get(resolvedParams.id) as any
+  const g = (await db.execute({ sql: 'SELECT title, number FROM gardens WHERE id = ?', args: [resolvedParams.id] })).rows[0] as any
   if (!g) return { title: 'Garten nicht gefunden' }
   return { title: `Parzelle ${g.number}: ${g.title} - KGV Hohefeld` }
 }
 
 export default async function GartenDetail({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
-  const garden = db.prepare('SELECT * FROM gardens WHERE id = ?').get(resolvedParams.id) as any
+  const garden = (await db.execute({ sql: 'SELECT * FROM gardens WHERE id = ?', args: [resolvedParams.id] })).rows[0] as any
   
   if (!garden) notFound()
 

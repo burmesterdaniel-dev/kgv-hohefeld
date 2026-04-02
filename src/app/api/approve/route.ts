@@ -10,7 +10,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
     }
 
-    db.prepare("UPDATE photos SET status = 'approved' WHERE id = ?").run(id)
+    await db.execute({ sql: "UPDATE photos SET status = 'approved' WHERE id = ?", args: [id] })
     
     return new NextResponse(`
       <html>

@@ -6,8 +6,7 @@ export async function POST(req: Request) {
     const { name, email, message } = await req.json()
     
     // Save to DB
-    const insert = db.prepare('INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)')
-    insert.run(name, email, message)
+    await db.execute({ sql: 'INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)', args: [name as string, email as string, message as string] })
 
     // Simulate Email to Admin
     console.log('\n--- NEUE E-MAIL (SIMULATION) ---')

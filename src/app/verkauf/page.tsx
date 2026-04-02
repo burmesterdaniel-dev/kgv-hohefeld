@@ -5,8 +5,8 @@ export const metadata = {
   title: 'Garten-Börse - KGV Hohefeld'
 }
 
-export default function Verkauf() {
-  const gardens = db.prepare('SELECT * FROM gardens WHERE status != \'sold\' ORDER BY created_at DESC').all() as any[]
+export default async function Verkauf() {
+  const gardens = (await db.execute('SELECT * FROM gardens WHERE status != \'sold\' ORDER BY created_at DESC')).rows as any[]
   
   return (
     <>

@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs'
 import path from 'path'
 
-export default function AdminMitglieder() {
-  const members = db.prepare('SELECT * FROM members ORDER BY id ASC').all() as any[]
+export default async function AdminMitglieder() {
+  const members = (await db.execute('SELECT * FROM members ORDER BY id ASC')).rows as any[]
 
   async function addMember(formData: FormData) {
     'use server'
@@ -30,7 +30,7 @@ export default function AdminMitglieder() {
     
     const filepath = filepaths.length > 0 ? JSON.stringify(filepaths) : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=400&fit=crop'
     
-    db.prepare('INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)').run(name, role, filepath, description)
+    await db.execute({ sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)', args: [name, role, filepath, description] })
     revalidatePath('/admin/mitglieder')
     revalidatePath('/vorstand')
   }
@@ -38,7 +38,7 @@ export default function AdminMitglieder() {
   async function deleteMember(formData: FormData) {
     'use server'
     const id = formData.get('id')
-    db.prepare('DELETE FROM members WHERE id = ?').run(id)
+    await db.execute({ sql: 'DELETE FROM members WHERE id = ?', args: [id as string] })
     revalidatePath('/admin/mitglieder')
     revalidatePath('/vorstand')
   }

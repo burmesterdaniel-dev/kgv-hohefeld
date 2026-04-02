@@ -3,7 +3,7 @@ import db from '@/lib/db'
 
 export async function GET() {
   try {
-    const entries = db.prepare('SELECT * FROM guestbook ORDER BY id DESC').all()
+    const entries = (await db.execute('SELECT * FROM guestbook ORDER BY id DESC')).rows
     return NextResponse.json({ entries })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch entries' }, { status: 500 })
@@ -17,8 +17,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Name and message required' }, { status: 400 })
     }
     
-    const info = db.prepare('INSERT INTO guestbook (name, message) VALUES (?, ?)').run(name, message)
-    const entry = db.prepare('SELECT * FROM guestbook WHERE id = ?').get(info.lastInsertRowid)
+    const info = await db.execute({ sql: 'INSERT INTO guestbook (name, message) VALUES (?, ?)', args: [name, message] })
+    const entry = (await db.execute({ sql: 'SELECT * FROM guestbook WHERE id = ?', args: [info.lastInsertRowid!.toString()] })).rows[0]
     
     return NextResponse.json({ entry })
   } catch (error) {

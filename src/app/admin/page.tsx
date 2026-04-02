@@ -6,10 +6,10 @@ export default async function AdminDashboard() {
   const user = await getSession()
   if (!user) redirect('/admin/login')
 
-  const openContacts = db.prepare("SELECT count(*) as c FROM contacts WHERE status = 'neu'").get() as {c: number}
-  const pendingPhotos = db.prepare("SELECT count(*) as c FROM photos WHERE status = 'pending'").get() as {c: number}
-  const availableGardens = db.prepare("SELECT count(*) as c FROM gardens WHERE status = 'available'").get() as {c: number}
-  const totalEvents = db.prepare("SELECT count(*) as c FROM events").get() as {c: number}
+  const openContacts = (await db.execute("SELECT count(*) as c FROM contacts WHERE status = 'neu'")).rows[0] as unknown as {c: number}
+  const pendingPhotos = (await db.execute("SELECT count(*) as c FROM photos WHERE status = 'pending'")).rows[0] as unknown as {c: number}
+  const availableGardens = (await db.execute("SELECT count(*) as c FROM gardens WHERE status = 'available'")).rows[0] as unknown as {c: number}
+  const totalEvents = (await db.execute("SELECT count(*) as c FROM events")).rows[0] as unknown as {c: number}
 
   return (
     <div className="space-y-6">

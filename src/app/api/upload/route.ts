@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const publicPath = `/uploads/${filename}`
 
     // Save to DB as pending
-    const info = db.prepare('INSERT INTO photos (filename, filepath, status) VALUES (?, ?, ?)').run(filename, publicPath, 'pending')
+    const info = await db.execute({ sql: 'INSERT INTO photos (filename, filepath, status) VALUES (?, ?, ?)', args: [filename, publicPath, 'pending'] })
     const photoId = info.lastInsertRowid
 
     // Mock Email Send

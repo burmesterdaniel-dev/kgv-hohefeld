@@ -5,8 +5,8 @@ export const metadata = {
   title: 'Aktuelles & Termine - KGV Hohefeld'
 }
 
-export default function Aktuelles() {
-  const events = db.prepare('SELECT * FROM events ORDER BY created_at DESC').all() as any[]
+export default async function Aktuelles() {
+  const events = (await db.execute('SELECT * FROM events ORDER BY created_at DESC')).rows as any[]
 
   return (
     <div className="max-w-7xl mx-auto px-8 mb-24" style={{paddingTop: '2rem'}}>

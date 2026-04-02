@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs'
 import path from 'path'
 
-export default function AdminGaerten() {
-  const gardens = db.prepare('SELECT * FROM gardens ORDER BY created_at DESC').all() as any[]
+export default async function AdminGaerten() {
+  const gardens = (await db.execute('SELECT * FROM gardens ORDER BY created_at DESC')).rows as any[]
 
   // status is 'available', 'reserved', 'sold'
   
@@ -36,7 +36,7 @@ export default function AdminGaerten() {
     
     const filepath = filepaths.length > 0 ? JSON.stringify(filepaths) : 'https://images.unsplash.com/photo-1589923188900-85dae5243404?q=80&w=800&auto=format&fit=crop'
     
-    db.prepare('INSERT INTO gardens (title, number, area, price, condition, equipment, description, filepath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run(title, number, area, price, condition, equipment, description, filepath)
+    await db.execute({ sql: 'INSERT INTO gardens (title, number, area, price, condition, equipment, description, filepath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', args: [title, number, area, price, condition, equipment, description, filepath] })
     revalidatePath('/admin/gaerten')
     revalidatePath('/verkauf')
     revalidatePath('/')
@@ -46,7 +46,7 @@ export default function AdminGaerten() {
     'use server'
     const id = formData.get('id')
     const status = formData.get('status')
-    db.prepare('UPDATE gardens SET status = ? WHERE id = ?').run(status, id)
+    await db.execute({ sql: 'UPDATE gardens SET status = ? WHERE id = ?', args: [status as string, id as string] })
     revalidatePath('/admin/gaerten')
     revalidatePath('/verkauf')
     revalidatePath('/')
@@ -55,7 +55,7 @@ export default function AdminGaerten() {
   async function deleteGarden(formData: FormData) {
     'use server'
     const id = formData.get('id')
-    db.prepare('DELETE FROM gardens WHERE id = ?').run(id)
+    await db.execute({ sql: 'DELETE FROM gardens WHERE id = ?', args: [id as string] })
     revalidatePath('/admin/gaerten')
     revalidatePath('/verkauf')
     revalidatePath('/')

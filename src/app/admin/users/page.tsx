@@ -1,22 +1,22 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 
-export default function AdminUsers() {
-  const users = db.prepare('SELECT * FROM users ORDER BY created_at DESC').all() as any[]
+export default async function AdminUsers() {
+  const users = (await db.execute('SELECT * FROM users ORDER BY created_at DESC')).rows as any[]
 
   async function addUser(formData: FormData) {
     'use server'
     const username = formData.get('username') as string
     const pw = formData.get('password') as string
     try {
-      db.prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)').run(username, pw)
+      await db.execute({ sql: 'INSERT INTO users (username, password_hash) VALUES (?, ?)', args: [username, pw] })
       revalidatePath('/admin/users')
     } catch(e) {} // ignore unique constraint errors in demo
   }
 
   async function deleteUser(formData: FormData) {
     'use server'
-    db.prepare('DELETE FROM users WHERE id = ?').run(formData.get('id'))
+    await db.execute({ sql: 'DELETE FROM users WHERE id = ?', args: [formData.get('id') as string] })
     revalidatePath('/admin/users')
   }
 

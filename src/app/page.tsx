@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import db from '@/lib/db'
 
-export default function Home() {
-  const events = db.prepare('SELECT * FROM events ORDER BY created_at DESC LIMIT 3').all() as any[]
+export default async function Home() {
+  const events = (await db.execute('SELECT * FROM events ORDER BY created_at DESC LIMIT 3')).rows as any[]
 
   return (
     <>

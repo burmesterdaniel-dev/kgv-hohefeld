@@ -1,19 +1,19 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 
-export default function AdminFotos() {
-  const photos = db.prepare('SELECT * FROM photos ORDER BY created_at DESC').all() as any[]
+export default async function AdminFotos() {
+  const photos = (await db.execute('SELECT * FROM photos ORDER BY created_at DESC')).rows as any[]
 
   async function approve(formData: FormData) {
     'use server'
-    db.prepare("UPDATE photos SET status = 'approved' WHERE id = ?").run(formData.get('id'))
+    await db.execute({ sql: "UPDATE photos SET status = 'approved' WHERE id = ?", args: [formData.get('id') as string] })
     revalidatePath('/admin/fotos')
     revalidatePath('/galerie')
   }
 
   async function reject(formData: FormData) {
     'use server'
-    db.prepare("DELETE FROM photos WHERE id = ?").run(formData.get('id'))
+    await db.execute({ sql: "DELETE FROM photos WHERE id = ?", args: [formData.get('id') as string] })
     revalidatePath('/admin/fotos')
     revalidatePath('/galerie')
   }

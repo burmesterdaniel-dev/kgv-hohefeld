@@ -4,14 +4,14 @@ import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
-  const ev = db.prepare('SELECT title FROM events WHERE id = ?').get(resolvedParams.id) as any
+  const ev = (await db.execute({ sql: 'SELECT title FROM events WHERE id = ?', args: [resolvedParams.id] })).rows[0] as any
   if (!ev) return { title: 'Event nicht gefunden' }
   return { title: `${ev.title} - Aktuelles - KGV Hohefeld` }
 }
 
 export default async function EventDetail({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
-  const ev = db.prepare('SELECT * FROM events WHERE id = ?').get(resolvedParams.id) as any
+  const ev = (await db.execute({ sql: 'SELECT * FROM events WHERE id = ?', args: [resolvedParams.id] })).rows[0] as any
   
   if (!ev) notFound()
 

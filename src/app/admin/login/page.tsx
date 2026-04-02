@@ -2,13 +2,13 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import db from '@/lib/db'
 
-export default function Login({ searchParams }: { searchParams: { error?: string } }) {
+export default async function Login({ searchParams }: { searchParams: { error?: string } }) {
   async function loginAction(formData: FormData) {
     'use server'
     const username = formData.get('username') as string
     const password = formData.get('password') as string
     
-    const user = db.prepare('SELECT id, password_hash FROM users WHERE username = ?').get(username) as any
+    const user = (await db.execute({ sql: 'SELECT id, password_hash FROM users WHERE username = ?', args: [username] })).rows[0] as any
     
     if (user && user.password_hash === password) {
       const cookieStore = await cookies()

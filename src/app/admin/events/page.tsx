@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs'
 import path from 'path'
 
-export default function AdminEvents() {
-  const events = db.prepare('SELECT * FROM events ORDER BY created_at DESC').all() as any[]
+export default async function AdminEvents() {
+  const events = (await db.execute('SELECT * FROM events ORDER BY created_at DESC')).rows as any[]
 
   async function addEvent(formData: FormData) {
     'use server'
@@ -26,7 +26,7 @@ export default function AdminEvents() {
       filepath = `/uploads/${filename}`
     }
 
-    db.prepare('INSERT INTO events (title, date_string, description, filepath) VALUES (?, ?, ?, ?)').run(title, date_string, description, filepath)
+    await db.execute({ sql: 'INSERT INTO events (title, date_string, description, filepath) VALUES (?, ?, ?, ?)', args: [title, date_string, description, filepath] })
     revalidatePath('/admin/events')
     revalidatePath('/')
     revalidatePath('/aktuelles')
@@ -35,7 +35,7 @@ export default function AdminEvents() {
   async function deleteEvent(formData: FormData) {
     'use server'
     const id = formData.get('id')
-    db.prepare('DELETE FROM events WHERE id = ?').run(id)
+    await db.execute({ sql: 'DELETE FROM events WHERE id = ?', args: [id as string] })
     revalidatePath('/admin/events')
     revalidatePath('/')
     revalidatePath('/aktuelles')
