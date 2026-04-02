@@ -1,9 +1,18 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth'
 import Link from 'next/link'
+import db from '@/lib/db'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getSession()
+
+  let openRequests = 0
+  if (user) {
+    try {
+      const res = await db.execute("SELECT count(*) as c FROM contacts WHERE status IN ('neu', 'wartet_auf_admin')")
+      openRequests = (res.rows[0] as any).c
+    } catch(e) {}
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -19,7 +28,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <Link href="/admin" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Dashboard</Link>
               <Link href="/admin/events" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Events</Link>
               <Link href="/admin/fotos" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Bilder</Link>
-              <Link href="/admin/kontakte" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Kontakte</Link>
+              <Link href="/admin/kontakte" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors flex justify-between items-center">
+                Anfragen
+                {openRequests > 0 && <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">{openRequests}</span>}
+              </Link>
               <Link href="/admin/mitglieder" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Vorstand</Link>
               <Link href="/admin/gaerten" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Gärten</Link>
               <Link href="/admin/users" className="px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors">Admins</Link>

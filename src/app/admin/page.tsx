@@ -6,7 +6,7 @@ export default async function AdminDashboard() {
   const user = await getSession()
   if (!user) redirect('/admin/login')
 
-  const openContacts = (await db.execute("SELECT count(*) as c FROM contacts WHERE status = 'neu'")).rows[0] as unknown as {c: number}
+  const openContacts = (await db.execute("SELECT count(*) as c FROM contacts WHERE status IN ('neu', 'wartet_auf_admin')")).rows[0] as unknown as {c: number}
   const pendingPhotos = (await db.execute("SELECT count(*) as c FROM photos WHERE status = 'pending'")).rows[0] as unknown as {c: number}
   const availableGardens = (await db.execute("SELECT count(*) as c FROM gardens WHERE status = 'available'")).rows[0] as unknown as {c: number}
   const totalEvents = (await db.execute("SELECT count(*) as c FROM events")).rows[0] as unknown as {c: number}
