@@ -3,6 +3,8 @@ import db from '@/lib/db'
 import { notFound } from 'next/navigation'
 import ImageGallery from '@/components/ImageGallery'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params
   const g = (await db.execute({ sql: 'SELECT title, number FROM gardens WHERE id = ?', args: [resolvedParams.id] })).rows[0] as any

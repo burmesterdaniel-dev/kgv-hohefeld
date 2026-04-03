@@ -2,6 +2,8 @@ import { getSession } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import db from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboard() {
   const user = await getSession()
   if (!user) redirect('/admin/login')

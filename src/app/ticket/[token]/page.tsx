@@ -3,6 +3,8 @@ import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 // Optional: Metadata can be set here if needed
 export const metadata = {
   title: 'Ihr Support-Ticket | KGV Hohefeld',

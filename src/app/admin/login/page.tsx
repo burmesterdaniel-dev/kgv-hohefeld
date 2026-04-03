@@ -2,6 +2,8 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import db from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Login({ searchParams }: { searchParams: { error?: string } }) {
   async function loginAction(formData: FormData) {
     'use server'

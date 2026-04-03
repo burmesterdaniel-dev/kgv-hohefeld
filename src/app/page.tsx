@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import db from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const events = (await db.execute('SELECT * FROM events ORDER BY created_at DESC LIMIT 3')).rows as any[]
 

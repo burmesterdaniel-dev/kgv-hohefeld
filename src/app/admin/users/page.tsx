@@ -1,6 +1,8 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminUsers() {
   const users = (await db.execute('SELECT * FROM users ORDER BY created_at DESC')).rows as any[]
 

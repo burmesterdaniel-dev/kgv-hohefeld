@@ -1,6 +1,8 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminFotos() {
   const photos = (await db.execute('SELECT * FROM photos ORDER BY created_at DESC')).rows as any[]
 

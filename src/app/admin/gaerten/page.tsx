@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs'
 import path from 'path'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminGaerten() {
   const gardens = (await db.execute('SELECT * FROM gardens ORDER BY created_at DESC')).rows as any[]
 

@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs'
 import path from 'path'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminEvents() {
   const events = (await db.execute('SELECT * FROM events ORDER BY created_at DESC')).rows as any[]
 
