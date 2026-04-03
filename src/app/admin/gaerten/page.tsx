@@ -71,7 +71,7 @@ export default async function AdminGaerten() {
           <input name="price" type="number" placeholder="Preis/Ablöse in €" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="condition" placeholder="Zustand (z.B. Gepflegt)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="equipment" placeholder="Ausstattung (z.B. Steinlaube, Strom)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <ImageUpload name="images" label="Garten-Bilder (Max. 4 MB pro Datei)" multiple />
+          <ImageUpload name="images" label="Garten-Bilder (Max. 10 MB pro Datei, wird automatisch komprimiert)" multiple />
           <RichTextEditor name="description" placeholder="Ausführliche Beschreibung..." />
           <button type="submit" className="bg-[#3c6a00] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#00473d] transition-colors md:col-span-3 lg:col-span-3 shadow-md">Inserat veröffentlichen</button>
         </form>

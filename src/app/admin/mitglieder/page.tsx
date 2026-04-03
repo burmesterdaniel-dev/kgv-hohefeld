@@ -52,7 +52,7 @@ export default async function AdminMitglieder() {
         <form action={addMember} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input name="name" placeholder="Name (z.B. Erika Musterfrau)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="role" placeholder="Funktion (z.B. Kassiererin)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <ImageUpload name="images" label="Porträt(s) (Max. 4 MB pro Datei)" multiple />
+          <ImageUpload name="images" label="Porträt(s) (Max. 10 MB pro Datei, wird automatisch komprimiert)" multiple />
           <RichTextEditor name="description" placeholder="Beschreibung..." />
           <button type="submit" className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 md:col-span-2 shadow-md">Mitglied speichern</button>
         </form>

@@ -39,7 +39,7 @@ export default async function AdminEvents() {
         <form action={addEvent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input name="title" placeholder="Titel (z.B. Sommerfest)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="date_string" placeholder="Datum (z.B. Sa. 10. Mai, 15 Uhr)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <ImageUpload name="image" label="Event-Bild (optional, Max. 4 MB)" />
+          <ImageUpload name="image" label="Event-Bild (optional, Max. 10 MB, wird automatisch komprimiert)" />
           <RichTextEditor name="description" placeholder="Beschreibungstext..." />
           <button type="submit" className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 md:col-span-2 shadow-md">Event veröffentlichen</button>
         </form>

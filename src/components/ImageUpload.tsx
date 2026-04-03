@@ -9,7 +9,7 @@ interface ImageUploadProps {
   maxSizeMB?: number
 }
 
-export default function ImageUpload({ name, label = 'Bild hochladen', multiple = false, maxSizeMB = 4 }: ImageUploadProps) {
+export default function ImageUpload({ name, label = 'Bild hochladen', multiple = false, maxSizeMB = 10 }: ImageUploadProps) {
   const [previews, setPreviews] = useState<string[]>([])
   const [dataUrls, setDataUrls] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -23,8 +23,8 @@ export default function ImageUpload({ name, label = 'Bild hochladen', multiple =
         const img = new Image()
         img.onload = () => {
           const canvas = document.createElement('canvas')
-          // Resize to max 1200px width/height to keep file size reasonable
-          const maxDim = 1200
+          // Resize to max 1600px width/height for good quality while keeping size reasonable
+          const maxDim = 1600
           let { width, height } = img
           if (width > maxDim || height > maxDim) {
             if (width > height) {

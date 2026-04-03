@@ -1,6 +1,7 @@
 import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 import { Resend } from 'resend'
+import DeleteTicketButton from '@/components/DeleteTicketButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -108,22 +109,22 @@ export default async function AdminKontakte() {
                   )}
                 </div>
 
-                {/* Rely Form */}
+                {/* Reply Form */}
                 <form action={sendAdminReply} className="mt-8 pt-6 border-t border-slate-200 flex flex-col gap-4">
                   <input type="hidden" name="contact_id" value={c.id} />
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-2">Antwort an {c.name} senden</label>
                     <textarea name="replyText" required rows={4} placeholder="Tippen Sie hier Ihre Rückmeldung an den Gartennutzer..." className="w-full rounded-xl border-slate-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20 p-4" />
                   </div>
-                  <div className="flex justify-between items-center mt-2">
-                    <button formAction={deleteContact} className="text-red-500 text-sm hover:underline font-semibold text-left">
-                      Gesamtes Ticket löschen
-                    </button>
+                  <div className="flex justify-end mt-2">
                     <button type="submit" className="bg-primary text-white px-8 py-3 rounded-lg font-bold shadow hover:scale-[1.02] transition-transform">
                       Antworten & Email senden
                     </button>
                   </div>
                 </form>
+
+                {/* Delete Ticket - separate form with confirmation */}
+                <DeleteTicketButton contactId={c.id} deleteAction={deleteContact} />
               </div>
             </details>
           )
