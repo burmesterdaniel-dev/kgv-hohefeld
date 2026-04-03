@@ -1,8 +1,6 @@
 import db from '@/lib/db'
 import RichTextEditor from '@/components/RichTextEditor'
 import { revalidatePath } from 'next/cache'
-import fs from 'fs'
-import path from 'path'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,13 +17,9 @@ export default async function AdminEvents() {
     let filepath = ''
     if (file && file.size > 0) {
       const buffer = Buffer.from(await file.arrayBuffer())
-      const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`
-      const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true })
-      }
-      fs.writeFileSync(path.join(uploadDir, filename), buffer)
-      filepath = `/uploads/${filename}`
+      const base64 = buffer.toString('base64')
+      const mimeType = file.type || 'image/jpeg'
+      filepath = `data:${mimeType};base64,${base64}`
     }
 
     await db.execute({ sql: 'INSERT INTO events (title, date_string, description, filepath) VALUES (?, ?, ?, ?)', args: [title, date_string, description, filepath] })
@@ -53,7 +47,7 @@ export default async function AdminEvents() {
           <input name="title" placeholder="Titel (z.B. Sommerfest)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="date_string" placeholder="Datum (z.B. Sa. 10. Mai, 15 Uhr)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <div className="md:col-span-2">
-            <label className="block text-sm font-bold text-slate-600 mb-1">Event-Bild (optional, Max. 10 MB)</label>
+            <label className="block text-sm font-bold text-slate-600 mb-1">Event-Bild (optional, Max. 5 MB)</label>
             <input type="file" name="filepath" accept="image/*" className="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-slate-50" />
           </div>
           <RichTextEditor name="description" placeholder="Beschreibungstext..." />

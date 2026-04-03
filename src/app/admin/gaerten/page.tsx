@@ -1,8 +1,6 @@
 import db from '@/lib/db'
 import RichTextEditor from '@/components/RichTextEditor'
 import { revalidatePath } from 'next/cache'
-import fs from 'fs'
-import path from 'path'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,18 +19,16 @@ export default async function AdminGaerten() {
     const equipment = formData.get('equipment') as string
     const description = formData.get('description') as string
     
-    // Process files
+    // Process files - store as base64 data URLs
     const files = formData.getAll('files') as File[]
     const filepaths: string[] = []
     
     for (const file of files) {
       if (file && file.size > 0) {
         const buffer = Buffer.from(await file.arrayBuffer())
-        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-        if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true })
-        fs.writeFileSync(path.join(uploadDir, filename), buffer)
-        filepaths.push(`/uploads/${filename}`)
+        const base64 = buffer.toString('base64')
+        const mimeType = file.type || 'image/jpeg'
+        filepaths.push(`data:${mimeType};base64,${base64}`)
       }
     }
     
@@ -77,7 +73,7 @@ export default async function AdminGaerten() {
           <input name="condition" placeholder="Zustand (z.B. Gepflegt)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="equipment" placeholder="Ausstattung (z.B. Steinlaube, Strom)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <div className="md:col-span-3 lg:col-span-3">
-            <label className="block text-sm font-bold text-slate-600 mb-1">Garten-Bilder (Mehrfachauswahl möglich, Max. 10 MB pro Datei)</label>
+            <label className="block text-sm font-bold text-slate-600 mb-1">Garten-Bilder (Mehrfachauswahl möglich, Max. 5 MB pro Datei)</label>
             <input type="file" name="files" accept="image/*" multiple className="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-slate-50" />
           </div>
           <RichTextEditor name="description" placeholder="Ausführliche Beschreibung..." />
