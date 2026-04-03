@@ -2,7 +2,7 @@ import db from '@/lib/db'
 import { revalidatePath } from 'next/cache'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 'missing_key_for_build')
 
 export default async function AdminKontakte() {
   const contacts = (await db.execute('SELECT * FROM contacts ORDER BY created_at DESC')).rows as any[]
