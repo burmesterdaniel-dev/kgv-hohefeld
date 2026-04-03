@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import db from '@/lib/db'
 import { v4 as uuidv4 } from 'uuid'
+import { sendPushToAll } from '@/lib/push'
 
 export async function POST(req: Request) {
   try {
@@ -23,6 +24,15 @@ export async function POST(req: Request) {
     console.log(`\nEs liegt eine neue Kontaktanfrage vor. Bitte loggen Sie sich ins Administration-Dashboard ein, um die Anfrage zu beantworten:`)
     console.log(`http://localhost:3001/admin/kontakte`)
     console.log('--------------------------------\n')
+
+    // Send push notification to all admin subscribers
+    try {
+      await sendPushToAll(
+        '📩 Neue Anfrage von ' + name,
+        `${safeSubject}: "${(message as string).slice(0, 80)}..."`,
+        '/admin/kontakte'
+      )
+    } catch(e) { console.error('Push failed:', e) }
 
     return NextResponse.json({ success: true, message: 'Ihre Anfrage wurde erfolgreich gesendet.' })
   } catch (error) {

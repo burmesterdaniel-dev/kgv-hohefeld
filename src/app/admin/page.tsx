@@ -2,6 +2,7 @@ import { getSession } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import db from '@/lib/db'
 import Link from 'next/link'
+import PushNotificationToggle from '@/components/PushNotificationToggle'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,12 +83,15 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
+      {/* Push Notifications */}
+      <PushNotificationToggle />
+
       {/* Info Banner */}
       <div className="bg-gradient-to-r from-[#3c6a00]/5 via-emerald-50 to-[#3c6a00]/5 border border-[#3c6a00]/10 text-[#3c6a00] p-5 rounded-2xl flex items-start gap-3">
         <span className="text-xl">💡</span>
         <div>
           <p className="font-bold text-sm mb-1">Tipp</p>
-          <p className="text-sm opacity-80">Nutzen Sie die Navigation links, um Inhalte der Webseite zu bearbeiten. Bilder werden beim Upload automatisch komprimiert und als JPEG optimiert.</p>
+          <p className="text-sm opacity-80">Installieren Sie diese App auf dem Home-Bildschirm: Safari → Teilen → &quot;Zum Home-Bildschirm&quot;. Aktivieren Sie Push-Benachrichtigungen um sofort über neue Anfragen informiert zu werden.</p>
         </div>
       </div>
     </div>
