@@ -1,11 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import 'react-quill/dist/quill.snow.css'
-
-// Dynamischer Import ohne SSR, da React Quill das window/document Objekt benötigt
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+import { useState } from 'react'
 
 interface RichTextEditorProps {
   name: string
@@ -15,43 +10,18 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ name, placeholder, defaultValue = '' }: RichTextEditorProps) {
   const [value, setValue] = useState(defaultValue)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link'],
-      ['clean'],
-    ],
-  }
 
   return (
     <div className="md:col-span-2 lg:col-span-3">
-      {/* Verborgenes Feld, damit das Formular den Inhalt per FormData normal übertragen kann */}
       <input type="hidden" name={name} value={value} />
-      
-      {mounted ? (
-        <div className="bg-white rounded-lg border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-primary focus-within:border-primary transition-all">
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={setValue}
-            placeholder={placeholder}
-            modules={modules}
-            className="h-64 mb-12 custom-quill" // margin-bottom wg. Quill Toolbar/Content Overflow
-          />
-        </div>
-      ) : (
-        <div className="h-[256px] w-full border border-slate-300 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
-          Lade Editor...
-        </div>
-      )}
+      <textarea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={placeholder}
+        rows={8}
+        className="w-full rounded-lg border border-slate-300 p-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-y bg-white"
+      />
+      <p className="text-xs text-slate-400 mt-1">HTML-Tags wie &lt;b&gt;, &lt;i&gt;, &lt;ul&gt;, &lt;li&gt; werden unterstützt.</p>
     </div>
   )
 }
