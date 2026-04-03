@@ -34,7 +34,7 @@ export default function Datenschutz() {
         <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
         <p className="bg-slate-50 p-6 rounded-xl border border-slate-100 not-prose">
           <strong>KGV-Hohe-Feld-Huchting e.V.</strong><br />
-          An der Leeuwarder Sraße<br />
+          An der Leeuwarder Straße<br />
           28259 Bremen<br /><br />
           E-Mail: webmaster@kgv-hohefeld.de
         </p>

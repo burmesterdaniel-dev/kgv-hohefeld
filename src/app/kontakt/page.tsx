@@ -101,7 +101,7 @@ export default function Kontakt() {
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">location_on</span>
                 <div>
-                  An der Leeuwarder Sraße<br/>
+                  An der Leeuwarder Straße<br/>
                   28259 Bremen
                 </div>
               </li>

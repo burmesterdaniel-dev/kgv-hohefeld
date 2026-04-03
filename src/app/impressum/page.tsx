@@ -16,7 +16,7 @@ export default function Impressum() {
         <h3>Angaben gemäß § 5 TMG</h3>
         <p>
           KGV-Hohe-Feld-Huchting e.V.<br/>
-          An der Leeuwarder Sraße<br/>
+          An der Leeuwarder Straße<br/>
           28259 Bremen
         </p>
         
