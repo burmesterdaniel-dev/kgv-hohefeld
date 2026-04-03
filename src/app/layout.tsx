@@ -4,6 +4,7 @@ import Link from 'next/link'
 import NavLinks from '@/components/NavLinks'
 import NavMobile from '@/components/NavMobile'
 import CookieBanner from '@/components/CookieBanner'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'KGV Hohefeld - Schrebergartenverein in Bremen',
@@ -99,6 +100,7 @@ export default function RootLayout({
           </div>
         </footer>
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   )

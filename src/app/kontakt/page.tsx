@@ -94,15 +94,15 @@ export default function Kontakt() {
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">business</span>
                 <div>
-                  <strong>KGV-Hohefeld e.V.</strong><br/>
-                  Kleingartenverein Hohefeld e.V. Bremen
+                  <strong>KGV-Hohe-Feld-Huchting e.V.</strong><br/>
+                  Kleingartenverein Hohe-Feld-Huchting e.V. Bremen
                 </div>
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">location_on</span>
                 <div>
-                  Hohefeldstraße 42<br/>
-                  28259 Bremen (Huchting)
+                  An der Leeuwarder Sraße<br/>
+                  28259 Bremen
                 </div>
               </li>
               <li className="flex gap-3">

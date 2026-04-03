@@ -15,13 +15,19 @@ export default function Impressum() {
       }}>
         <h3>Angaben gemäß § 5 TMG</h3>
         <p>
-          Kleingartenverein Hohefeld e.V.<br/>
-          Musterstraße 123<br/>
-          28195 Bremen
+          KGV-Hohe-Feld-Huchting e.V.<br/>
+          An der Leeuwarder Sraße<br/>
+          28259 Bremen
         </p>
         
-        <h3 style={{marginTop: '2rem'}}>Vertreten durch:</h3>
-        <p>1. Vorsitzender: Max Mustermann<br/>2. Vorsitzende: Erika Musterfrau</p>
+        <h3 style={{marginTop: '2rem'}}>Vertreten durch den Vorstand:</h3>
+        <p>
+          1. Vorsitzender: Zoltan Wellbrock<br/>
+          2. Vorsitzende: Valentina Fuks<br/>
+          1. Kassiererin: Valentina Tebelius<br/>
+          1. Schriftführerin: Anna Fusikova<br/>
+          2. Schriftführerin: Britta Schulze
+        </p>
 
         <h3 style={{marginTop: '2rem'}}>Kontakt:</h3>
         <p>
@@ -33,7 +39,7 @@ export default function Impressum() {
         <p>
           Eintragung im Vereinsregister.<br/>
           Registergericht: Amtsgericht Bremen<br/>
-          Registernummer: VR 12345 HB
+          Registernummer: VR 3259 HB
         </p>
       </div>
     </div>

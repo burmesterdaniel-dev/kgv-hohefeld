@@ -33,9 +33,9 @@ export default function Datenschutz() {
         <h3>Hinweis zur verantwortlichen Stelle</h3>
         <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
         <p className="bg-slate-50 p-6 rounded-xl border border-slate-100 not-prose">
-          <strong>Kleingartenverein Hohefeld e.V.</strong><br />
-          Musterstraße 123<br />
-          28195 Bremen<br /><br />
+          <strong>KGV-Hohe-Feld-Huchting e.V.</strong><br />
+          An der Leeuwarder Sraße<br />
+          28259 Bremen<br /><br />
           E-Mail: webmaster@kgv-hohefeld.de
         </p>
 
@@ -67,6 +67,9 @@ export default function Datenschutz() {
         <hr className="my-12 border-slate-200" />
 
         <h2>4. Plugins und Tools</h2>
+        <h3>Vercel Web Analytics</h3>
+        <p>Diese Website nutzt <strong>Vercel Web Analytics</strong> (ein Dienst von Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA) um die Seitenaufrufe und Performance unserer Website zu analysieren. Dabei arbeitet Vercel Analytics äußerst datenschutzfreundlich: Es werden <strong>keine personenbezogenen Daten</strong> gespeichert und <strong>keine Tracking-Cookies</strong> auf Ihrem Gerät abgelegt. Auch die IP-Adresse wird anonymisiert, weshalb keine direkte Rückverfolgbarkeit zu Ihnen möglich ist. Diese rein statistische und pseudonymisierte Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO zur Wahrung unseres berechtigten Interesses an einem performanten und sicheren Web-Angebot.</p>
+
         <h3>Google Fonts (lokal)</h3>
         <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Web Fonts (Plus Jakarta Sans und Manrope). Diese werden durch das Next.js Framework lokal gehostet bzw. optimiert geladen, sodass keine Verbindung zu Google-Servern beim Aufruf der Seite aufgebaut wird. Es werden keine IP-Adressen an externe Schriftartanbieter übertragen.</p>
 
