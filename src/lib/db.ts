@@ -130,7 +130,7 @@ async function initDb() {
       await dbClient.execute({ sql: 'INSERT INTO gardens (title, number, area, price, condition, equipment, description, filepath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', args: ['Starterpaket', '58', 240, 1200, 'Renovierungsbedürftig', 'Einfache Laube, Wasseranschluss', 'Perfekt für Einsteiger! Kommt mit einfacher Laube und Wasseranschluss.', 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e736?q=80&w=800&auto=format&fit=crop'] })
     }
 
-    const checkZoltan = await dbClient.execute('SELECT count(*) as count FROM members WHERE name LIKE "%Zoltan%"')
+    const checkZoltan = await dbClient.execute("SELECT count(*) as count FROM members WHERE name LIKE '%Zoltan%'")
     if ((checkZoltan.rows[0].count as number) === 0) {
       await dbClient.execute('DELETE FROM members') // Clear out old dummies
       
