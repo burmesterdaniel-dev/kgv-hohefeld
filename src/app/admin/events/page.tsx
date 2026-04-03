@@ -1,5 +1,6 @@
 import db from '@/lib/db'
 import RichTextEditor from '@/components/RichTextEditor'
+import ImageUpload from '@/components/ImageUpload'
 import { revalidatePath } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
@@ -12,15 +13,7 @@ export default async function AdminEvents() {
     const title = formData.get('title') as string
     const date_string = formData.get('date_string') as string
     const description = formData.get('description') as string
-    const file = formData.get('filepath') as File | null
-    
-    let filepath = ''
-    if (file && file.size > 0) {
-      const buffer = Buffer.from(await file.arrayBuffer())
-      const base64 = buffer.toString('base64')
-      const mimeType = file.type || 'image/jpeg'
-      filepath = `data:${mimeType};base64,${base64}`
-    }
+    const filepath = (formData.get('image') as string) || ''
 
     await db.execute({ sql: 'INSERT INTO events (title, date_string, description, filepath) VALUES (?, ?, ?, ?)', args: [title, date_string, description, filepath] })
     revalidatePath('/admin/events')
@@ -46,10 +39,7 @@ export default async function AdminEvents() {
         <form action={addEvent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input name="title" placeholder="Titel (z.B. Sommerfest)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="date_string" placeholder="Datum (z.B. Sa. 10. Mai, 15 Uhr)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <div className="md:col-span-2">
-            <label className="block text-sm font-bold text-slate-600 mb-1">Event-Bild (optional, Max. 5 MB)</label>
-            <input type="file" name="filepath" accept="image/*" className="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-slate-50" />
-          </div>
+          <ImageUpload name="image" label="Event-Bild (optional, Max. 4 MB)" />
           <RichTextEditor name="description" placeholder="Beschreibungstext..." />
           <button type="submit" className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 md:col-span-2 shadow-md">Event veröffentlichen</button>
         </form>
@@ -61,6 +51,7 @@ export default async function AdminEvents() {
             <tr>
               <th className="p-4 font-bold text-slate-600">Titel</th>
               <th className="p-4 font-bold text-slate-600">Datum</th>
+              <th className="p-4 font-bold text-slate-600">Bild</th>
               <th className="p-4 font-bold text-slate-600">Aktion</th>
             </tr>
           </thead>
@@ -70,6 +61,13 @@ export default async function AdminEvents() {
                 <td className="p-4 font-medium text-slate-800">{ev.title}</td>
                 <td className="p-4 text-slate-500">{ev.date_string}</td>
                 <td className="p-4">
+                  {ev.filepath ? (
+                    <img src={ev.filepath} alt="" className="w-16 h-12 object-cover rounded" />
+                  ) : (
+                    <span className="text-slate-300 text-sm">—</span>
+                  )}
+                </td>
+                <td className="p-4">
                   <form action={deleteEvent}>
                     <input type="hidden" name="id" value={ev.id} />
                     <button type="submit" className="text-red-600 font-bold text-sm bg-red-100 py-2 px-4 rounded-md hover:bg-red-200 transition-colors">Löschen</button>
@@ -78,7 +76,7 @@ export default async function AdminEvents() {
               </tr>
             ))}
             {events.length === 0 && (
-              <tr><td colSpan={3} className="p-8 text-center text-slate-500">Keine Events vorhanden.</td></tr>
+              <tr><td colSpan={4} className="p-8 text-center text-slate-500">Keine Events vorhanden.</td></tr>
             )}
           </tbody>
         </table>

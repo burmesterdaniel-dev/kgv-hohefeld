@@ -1,13 +1,12 @@
 import db from '@/lib/db'
 import RichTextEditor from '@/components/RichTextEditor'
+import ImageUpload from '@/components/ImageUpload'
 import { revalidatePath } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminGaerten() {
   const gardens = (await db.execute('SELECT * FROM gardens ORDER BY created_at DESC')).rows as any[]
-
-  // status is 'available', 'reserved', 'sold'
   
   async function addGarden(formData: FormData) {
     'use server'
@@ -18,21 +17,21 @@ export default async function AdminGaerten() {
     const condition = formData.get('condition') as string
     const equipment = formData.get('equipment') as string
     const description = formData.get('description') as string
+    const imagesRaw = formData.get('images') as string
     
-    // Process files - store as base64 data URLs
-    const files = formData.getAll('files') as File[]
-    const filepaths: string[] = []
-    
-    for (const file of files) {
-      if (file && file.size > 0) {
-        const buffer = Buffer.from(await file.arrayBuffer())
-        const base64 = buffer.toString('base64')
-        const mimeType = file.type || 'image/jpeg'
-        filepaths.push(`data:${mimeType};base64,${base64}`)
+    let filepath = 'https://images.unsplash.com/photo-1589923188900-85dae5243404?q=80&w=800&auto=format&fit=crop'
+    if (imagesRaw) {
+      try {
+        const parsed = JSON.parse(imagesRaw)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          filepath = JSON.stringify(parsed)
+        }
+      } catch {
+        if (imagesRaw.startsWith('data:')) {
+          filepath = imagesRaw
+        }
       }
     }
-    
-    const filepath = filepaths.length > 0 ? JSON.stringify(filepaths) : 'https://images.unsplash.com/photo-1589923188900-85dae5243404?q=80&w=800&auto=format&fit=crop'
     
     await db.execute({ sql: 'INSERT INTO gardens (title, number, area, price, condition, equipment, description, filepath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', args: [title, number, area, price, condition, equipment, description, filepath] })
     revalidatePath('/admin/gaerten')
@@ -65,17 +64,14 @@ export default async function AdminGaerten() {
       
       <div className="bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm mb-10">
         <h3 className="font-bold text-lg mb-6 text-slate-700">Neue Parzelle inserieren</h3>
-        <form action={addGarden} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" encType="multipart/form-data">
+        <form action={addGarden} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <input name="title" placeholder="Titel (z.B. Ruhige See-Lage)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="number" placeholder="Parzellen-Nr. (z.B. 42)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="area" type="number" placeholder="Fläche in m²" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="price" type="number" placeholder="Preis/Ablöse in €" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="condition" placeholder="Zustand (z.B. Gepflegt)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="equipment" placeholder="Ausstattung (z.B. Steinlaube, Strom)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <div className="md:col-span-3 lg:col-span-3">
-            <label className="block text-sm font-bold text-slate-600 mb-1">Garten-Bilder (Mehrfachauswahl möglich, Max. 5 MB pro Datei)</label>
-            <input type="file" name="files" accept="image/*" multiple className="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-slate-50" />
-          </div>
+          <ImageUpload name="images" label="Garten-Bilder (Max. 4 MB pro Datei)" multiple />
           <RichTextEditor name="description" placeholder="Ausführliche Beschreibung..." />
           <button type="submit" className="bg-[#3c6a00] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#00473d] transition-colors md:col-span-3 lg:col-span-3 shadow-md">Inserat veröffentlichen</button>
         </form>

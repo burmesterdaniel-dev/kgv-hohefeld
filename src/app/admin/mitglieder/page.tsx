@@ -1,5 +1,6 @@
 import db from '@/lib/db'
 import RichTextEditor from '@/components/RichTextEditor'
+import ImageUpload from '@/components/ImageUpload'
 import { revalidatePath } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
@@ -12,21 +13,22 @@ export default async function AdminMitglieder() {
     const name = formData.get('name') as string
     const role = formData.get('role') as string
     const description = formData.get('description') as string
+    const imagesRaw = formData.get('images') as string
     
-    // Process files - store as base64 data URLs
-    const files = formData.getAll('files') as File[]
-    const filepaths: string[] = []
-    
-    for (const file of files) {
-      if (file && file.size > 0) {
-        const buffer = Buffer.from(await file.arrayBuffer())
-        const base64 = buffer.toString('base64')
-        const mimeType = file.type || 'image/jpeg'
-        filepaths.push(`data:${mimeType};base64,${base64}`)
+    let filepath = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=400&fit=crop'
+    if (imagesRaw) {
+      try {
+        const parsed = JSON.parse(imagesRaw)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          filepath = JSON.stringify(parsed)
+        }
+      } catch {
+        // Single data URL
+        if (imagesRaw.startsWith('data:')) {
+          filepath = imagesRaw
+        }
       }
     }
-    
-    const filepath = filepaths.length > 0 ? JSON.stringify(filepaths) : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=400&fit=crop'
     
     await db.execute({ sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)', args: [name, role, filepath, description] })
     revalidatePath('/admin/mitglieder')
@@ -47,13 +49,10 @@ export default async function AdminMitglieder() {
       
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-10">
         <h3 className="font-bold text-lg mb-4 text-slate-700">Neues Mitglied hinzufügen</h3>
-        <form action={addMember} className="grid grid-cols-1 md:grid-cols-2 gap-4" encType="multipart/form-data">
+        <form action={addMember} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input name="name" placeholder="Name (z.B. Erika Musterfrau)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
           <input name="role" placeholder="Funktion (z.B. Kassiererin)" required className="border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-primary outline-none" />
-          <div className="md:col-span-2">
-            <label className="block text-sm font-bold text-slate-600 mb-1">Porträt(s) (Mehrfachauswahl möglich, Max. 5 MB pro Datei)</label>
-            <input type="file" name="files" accept="image/*" multiple className="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-slate-50" />
-          </div>
+          <ImageUpload name="images" label="Porträt(s) (Max. 4 MB pro Datei)" multiple />
           <RichTextEditor name="description" placeholder="Beschreibung..." />
           <button type="submit" className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 md:col-span-2 shadow-md">Mitglied speichern</button>
         </form>
