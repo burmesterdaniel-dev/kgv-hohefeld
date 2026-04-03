@@ -26,7 +26,7 @@ export default async function Aktuelles() {
             <div className="p-8 flex flex-col flex-1">
               <h3 className="text-xl font-bold text-slate-800 mb-2">{ev.title}</h3>
               <p className="text-gray-500 text-sm mb-4 font-bold tracking-wide">📅 {ev.date_string}</p>
-              <p className="text-gray-700 leading-relaxed line-clamp-3 mb-6 flex-1">{ev.description}</p>
+              <div className="text-gray-700 leading-relaxed line-clamp-3 mb-6 flex-1 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: ev.description }} />
               <Link href={`/aktuelles/${ev.id}`} className="mt-auto pt-4 border-t border-slate-100 font-bold text-[#00473d] flex items-center gap-2 hover:text-[#3c6a00] transition-colors group">
                 Ganzer Beitrag <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
               </Link>

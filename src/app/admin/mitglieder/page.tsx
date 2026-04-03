@@ -76,7 +76,7 @@ export default async function AdminMitglieder() {
               </div>
             </div>
             <div className="p-5 flex-1 flex flex-col">
-              <p className="text-slate-600 text-sm mb-6 flex-1">{m.description}</p>
+              <div className="text-slate-600 text-sm mb-6 flex-1 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: m.description || '' }} />
               <form action={deleteMember}>
                 <input type="hidden" name="id" value={m.id} />
                 <button type="submit" className="w-full text-red-600 font-bold text-sm bg-red-50 py-2.5 rounded-lg hover:bg-red-100 transition-colors">Mitglied entfernen</button>

@@ -60,7 +60,7 @@ export default async function Home() {
                 <h4 className="text-xl font-headline font-bold text-primary mb-2 group-hover:text-secondary transition-colors">{ev.title}</h4>
                 <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-in-out">
                   <div className="overflow-hidden">
-                    <p className="text-sm text-on-surface-variant pt-4 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{ev.description}</p>
+                    <div className="text-sm text-on-surface-variant pt-4 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 prose prose-sm max-w-none line-clamp-3" dangerouslySetInnerHTML={{ __html: ev.description }} />
                   </div>
                 </div>
               </div>

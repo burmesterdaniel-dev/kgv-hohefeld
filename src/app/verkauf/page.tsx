@@ -57,7 +57,7 @@ export default async function Verkauf() {
             <div className="p-8 flex-1 flex flex-col">
               <div className="mb-4">
                 <h3 className="text-2xl font-headline font-bold text-primary mb-2 line-clamp-1">{g.title}</h3>
-                <p className="text-on-surface-variant line-clamp-2 leading-relaxed">{g.description}</p>
+                <div className="text-on-surface-variant line-clamp-2 leading-relaxed prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: g.description }} />
               </div>
               <div className="flex items-center justify-between mt-auto mb-6 pt-6 border-t border-surface-container">
                 <div className="flex flex-col">
