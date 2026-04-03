@@ -36,7 +36,7 @@ export default function Datenschutz() {
           <strong>Kleingartenverein Hohefeld e.V.</strong><br />
           Musterstraße 123<br />
           28195 Bremen<br /><br />
-          E-Mail: info@kgv-hohefeld.test.de
+          E-Mail: webmaster@kgv-hohefeld.de
         </p>
 
         <h3>SSL- bzw. TLS-Verschlüsselung</h3>

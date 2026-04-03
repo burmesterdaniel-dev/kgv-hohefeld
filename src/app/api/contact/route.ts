@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     // Simulate Email to Admin
     console.log('\n--- NEUE E-MAIL (SIMULATION) ---')
-    console.log(`An: vorstand@kgv-hohefeld.de`)
+    console.log(`An: webmaster@kgv-hohefeld.de`)
     console.log(`Betreff: Neue Kontaktanfrage / Support-Ticket von ${name}`)
     console.log(`\nEs liegt eine neue Kontaktanfrage vor. Bitte loggen Sie sich ins Administration-Dashboard ein, um die Anfrage zu beantworten:`)
     console.log(`http://localhost:3001/admin/kontakte`)

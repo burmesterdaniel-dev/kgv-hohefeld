@@ -107,7 +107,7 @@ export default function Kontakt() {
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">mail</span>
-                <a href="mailto:vorstand@kgv-hohefeld.de" className="hover:text-[#3c6a00] transition-colors">vorstand@kgv-hohefeld.de</a>
+                <a href="mailto:webmaster@kgv-hohefeld.de" className="hover:text-[#3c6a00] transition-colors">webmaster@kgv-hohefeld.de</a>
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">call</span>
