@@ -31,7 +31,7 @@ export default function Impressum() {
 
         <h3 style={{marginTop: '2rem'}}>Kontakt:</h3>
         <p>
-          Telefon: +49 (0) 421 1234567<br/>
+          Telefon: +49 (0) 16095641271<br/>
           E-Mail: webmaster@kgv-hohefeld.de
         </p>
 

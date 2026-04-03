@@ -111,7 +111,7 @@ export default function Kontakt() {
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-[#3c6a00]">call</span>
-                <span>0421 – 123 456 78</span>
+                <span>+49 (0) 16095641271</span>
               </li>
             </ul>
           </div>
