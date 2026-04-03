@@ -130,24 +130,11 @@ async function initDb() {
       await dbClient.execute({ sql: 'INSERT INTO gardens (title, number, area, price, condition, equipment, description, filepath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', args: ['Starterpaket', '58', 240, 1200, 'Renovierungsbedürftig', 'Einfache Laube, Wasseranschluss', 'Perfekt für Einsteiger! Kommt mit einfacher Laube und Wasseranschluss.', 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e736?q=80&w=800&auto=format&fit=crop'] })
     }
 
-    const checkZoltan = await dbClient.execute("SELECT count(*) as count FROM members WHERE name LIKE '%Zoltan%'")
-    if ((checkZoltan.rows[0].count as number) === 0) {
-      await dbClient.execute('DELETE FROM members') // Clear out old dummies
-      
-      const members = [
-        { role: '1. Vorsitzender', name: 'Zoltan Wellbrock', description: 'Leitung des Vorstands und rechtliche Vertretung des Vereins nach außen.', filepath: '' },
-        { role: '2. Vorsitzende', name: 'Valentina Fuks', description: 'Stellvertretende Leitung und organisatorische Unterstützung.', filepath: '' },
-        { role: '1. Kassiererin', name: 'Valentina Tebelius', description: 'Verwaltung der Finanzen und Pachtangelegenheiten.', filepath: '' },
-        { role: '1. Schriftführerin', name: 'Anna Fusikova', description: 'Dokumentation und Protokollierung aller Vorstandssitzungen.', filepath: '' },
-        { role: '2. Schriftführerin', name: 'Britta Schulze', description: 'Unterstützung in der vereinsinternen Kommunikation.', filepath: '' }
-      ]
-
-      for (const m of members) {
-        await dbClient.execute({
-          sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)',
-          args: [m.name, m.role, m.filepath, m.description]
-        })
-      }
+    const membersCountResult = await dbClient.execute('SELECT count(*) as count FROM members')
+    if ((membersCountResult.rows[0].count as number) === 0) {
+      await dbClient.execute({ sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)', args: ['Klaus Meier', '1. Vorsitzender', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=400&fit=crop', 'Klaus ist seit 20 Jahren im Verein und organisiert unsere Vereinsfeste.'] })
+      await dbClient.execute({ sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)', args: ['Sabine Schmidt', '2. Vorsitzende / Kassenwartin', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&h=400&fit=crop', 'Sabine kümmert sich um die Finanzen und die Gärtenvergabe.'] })
+      await dbClient.execute({ sql: 'INSERT INTO members (name, role, filepath, description) VALUES (?, ?, ?, ?)', args: ['Dieter Krause', 'Schriftführer', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=400&fit=crop', 'Dieter dokumentiert unsere Versammlungen und verwaltet die Website.'] })
     }
 
   } catch (e) {
