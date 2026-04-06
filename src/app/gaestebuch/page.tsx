@@ -32,10 +32,12 @@ export default function Gaestebuch() {
 
   const handleGuestbookSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const form = e.target as HTMLFormElement
+    const honeypot = (form.querySelector('input[name="website"]') as HTMLInputElement)?.value
     const res = await fetch('/api/guestbook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, message })
+      body: JSON.stringify({ name, message, website: honeypot || '' })
     })
     if (res.ok) {
       const data = await res.json()
@@ -53,7 +55,8 @@ export default function Gaestebuch() {
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
-      message: formData.get('message')
+      message: formData.get('message'),
+      website: formData.get('website'),
     }
 
     const res = await fetch('/api/contact', {
@@ -118,7 +121,11 @@ export default function Gaestebuch() {
             </div>
             <div className="relative z-10">
               <h3 className="font-headline text-2xl font-bold mb-6">Nachricht hinterlassen</h3>
-              <form onSubmit={handleGuestbookSubmit} className="space-y-4">
+              <form onSubmit={handleGuestbookSubmit} className="space-y-4" autoComplete="off">
+                {/* Honeypot */}
+                <div style={{position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden'}} aria-hidden="true">
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+                </div>
                 <div className="grid grid-cols-1 gap-4">
                   <input required value={name} onChange={e => setName(e.target.value)} className="w-full bg-primary-container/50 border-none rounded-DEFAULT py-4 px-6 text-white placeholder:text-on-primary-container focus:ring-2 focus:ring-secondary transition-all" placeholder="Ihr Name" type="text" />
                   <textarea required value={message} onChange={e => setMessage(e.target.value)} className="w-full bg-primary-container/50 border-none rounded-DEFAULT py-4 px-6 text-white placeholder:text-on-primary-container focus:ring-2 focus:ring-secondary transition-all" placeholder="Ihre Nachricht..." rows={4}></textarea>
@@ -138,7 +145,11 @@ export default function Gaestebuch() {
               <span className="material-symbols-outlined text-secondary">mail</span> Kontakt
             </h2>
             <div className="bg-surface-container-high p-8 rounded-lg">
-              <form onSubmit={handleContactSubmit} className="grid grid-cols-1 gap-6">
+              <form onSubmit={handleContactSubmit} className="grid grid-cols-1 gap-6" autoComplete="off">
+                {/* Honeypot */}
+                <div style={{position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden'}} aria-hidden="true">
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+                </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Name</label>
                   <input name="name" required className="w-full bg-surface-container-lowest border-none rounded-DEFAULT p-4 focus:ring-2 focus:ring-secondary transition-all shadow-sm" type="text"/>

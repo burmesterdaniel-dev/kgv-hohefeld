@@ -22,7 +22,8 @@ export default function Kontakt() {
       name: formData.get('name'),
       email: formData.get('email'),
       subject: formData.get('subject'),
-      message: formData.get('message')
+      message: formData.get('message'),
+      website: formData.get('website'),
     }
 
     try {
@@ -53,7 +54,12 @@ export default function Kontakt() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="card p-8 bg-white rounded-xl shadow-md border-t-4 border-[#3c6a00]">
           <h2 className="text-2xl font-bold text-[#00473d] mb-6">Nachricht senden</h2>
-          <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', gap: '1rem'}} autoComplete="off">
+            {/* Honeypot field — hidden from users, bots fill it */}
+            <div style={{position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden'}} aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input type="text" name="website" id="website" tabIndex={-1} autoComplete="off" />
+            </div>
             <div>
               <label style={{display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#191c1a'}}>Name</label>
               <input name="name" required type="text" style={{width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #ccc'}} />

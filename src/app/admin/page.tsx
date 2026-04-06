@@ -23,7 +23,7 @@ export default async function AdminDashboard() {
     { title: 'Freie Gärten', value: availableGardens.c, icon: '🌱', color: 'from-[#3c6a00] to-emerald-600', link: '/admin/gaerten' },
     { title: 'Aktive Events', value: totalEvents.c, icon: '📅', color: 'from-purple-500 to-violet-600', link: '/admin/events' },
     { title: 'Vorstandsmitglieder', value: totalMembers.c, icon: '👥', color: 'from-slate-600 to-slate-700', link: '/admin/mitglieder' },
-    { title: 'Gästebuch', value: totalGuestbook.c, icon: '📝', color: 'from-rose-500 to-pink-500', link: '#' },
+    { title: 'Gästebuch', value: totalGuestbook.c, icon: '📝', color: 'from-rose-500 to-pink-500', link: '/admin/gaestebuch' },
   ]
 
   return (

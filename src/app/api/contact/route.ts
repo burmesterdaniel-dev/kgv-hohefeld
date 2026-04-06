@@ -2,10 +2,49 @@ import { NextResponse } from 'next/server'
 import db from '@/lib/db'
 import { v4 as uuidv4 } from 'uuid'
 import { sendPushToAll } from '@/lib/push'
+import { rateLimit, getClientIp, isHoneypotTriggered } from '@/lib/rate-limit'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, subject, message } = await req.json()
+    const ip = getClientIp(req)
+
+    // Rate limit: max 3 contact requests per IP per minute
+    const { allowed } = rateLimit(ip, 3, 60_000)
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Zu viele Anfragen. Bitte warten Sie einen Moment.' },
+        { status: 429 }
+      )
+    }
+
+    const body = await req.json()
+
+    // Honeypot check — bots fill hidden fields, real users don't
+    if (isHoneypotTriggered(body)) {
+      // Pretend success so bots don't adapt
+      return NextResponse.json({ success: true, message: 'Ihre Anfrage wurde erfolgreich gesendet.' })
+    }
+
+    const { name, email, subject, message } = body
+    
+    // Basic validation
+    if (!name || !email || !message) {
+      return NextResponse.json({ error: 'Alle Pflichtfelder müssen ausgefüllt werden.' }, { status: 400 })
+    }
+
+    // Simple email format check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' }, { status: 400 })
+    }
+
+    // Reject suspiciously short or long messages
+    if (message.length < 10) {
+      return NextResponse.json({ error: 'Ihre Nachricht ist zu kurz. Bitte beschreiben Sie Ihr Anliegen.' }, { status: 400 })
+    }
+    if (message.length > 5000) {
+      return NextResponse.json({ error: 'Ihre Nachricht ist zu lang (max. 5000 Zeichen).' }, { status: 400 })
+    }
+
     const safeSubject = subject || 'Allgemeine Anfrage'
     const token = uuidv4()
     

@@ -128,7 +128,9 @@ async function initDb() {
   }
 }
 
-// Call init safely
-initDb()
+// Call init safely (skip during build to avoid SQLITE_BUSY locks)
+if (process.env.NEXT_PHASE !== 'phase-production-build') {
+  initDb()
+}
 
 export default dbExport
