@@ -80,6 +80,10 @@ export default async function AdminDashboard() {
             <span className="text-2xl block mb-2 group-hover:scale-110 transition-transform">🌱</span>
             <span className="text-sm font-bold text-slate-600">Gärten verwalten</span>
           </Link>
+          <Link href="/admin/gaestebuch" className="bg-gradient-to-br from-slate-50 to-slate-100 hover:from-rose-50 hover:to-pink-50 p-4 rounded-xl text-center transition-all group border border-slate-200/50">
+            <span className="text-2xl block mb-2 group-hover:scale-110 transition-transform">📝</span>
+            <span className="text-sm font-bold text-slate-600">Gästebuch</span>
+          </Link>
         </div>
       </div>
 
