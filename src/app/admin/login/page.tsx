@@ -1,10 +1,14 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import db from '@/lib/db'
+import { getSession } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Login({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const user = await getSession()
+  if (user) redirect('/admin')
+  
   const params = await searchParams
   
   async function loginAction(formData: FormData) {

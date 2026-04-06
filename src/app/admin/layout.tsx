@@ -8,15 +8,6 @@ import AdminMobileNav from '@/components/AdminMobileNav'
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getSession()
 
-  // If not logged in, show ONLY the login form - nothing else
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0a1f1a] via-[#0d2818] to-[#0a1f1a] flex items-center justify-center p-4">
-        {children}
-      </div>
-    )
-  }
-
   let openRequests = 0
   let pendingPhotos = 0
   try {
@@ -25,6 +16,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     const photosRes = await db.execute("SELECT count(*) as c FROM photos WHERE status = 'pending'")
     pendingPhotos = (photosRes.rows[0] as any).c
   } catch(e) {}
+
+  // If not logged in, show ONLY the login form - nothing else
+  // This early return ensures NO sidebar is rendered for unauthenticated users
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0a1f1a] via-[#0d2818] to-[#0a1f1a] flex items-center justify-center p-4">
+        {children}
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/20 to-slate-50 flex overflow-x-hidden">
